@@ -24,6 +24,7 @@ type DeviceProfile struct {
 	Description     string           `json:"description" yaml:"description"`
 	Model           string           `json:"model" yaml:"model"`
 	Labels          []string         `json:"labels" yaml:"labels,flow"`
+	DeviceService   string           `json:"deviceService" yaml:"deviceService"` // 这里不进行验证了，否则无法兼容
 	DeviceResources []DeviceResource `json:"deviceResources" yaml:"deviceResources" validate:"required,gt=0,dive"`
 	DeviceCommands  []DeviceCommand  `json:"deviceCommands" yaml:"deviceCommands" validate:"dive"`
 }
@@ -47,6 +48,7 @@ func (dp *DeviceProfile) UnmarshalYAML(unmarshal func(interface{}) error) error 
 		Description     string           `yaml:"description"`
 		Model           string           `yaml:"model"`
 		Labels          []string         `yaml:"labels"`
+		DeviceService   string           `yaml:"deviceService"`
 		DeviceResources []DeviceResource `yaml:"deviceResources"`
 		DeviceCommands  []DeviceCommand  `yaml:"deviceCommands"`
 	}
@@ -80,6 +82,7 @@ func ToDeviceProfileModel(deviceProfileDTO DeviceProfile) models.DeviceProfile {
 		Manufacturer:    deviceProfileDTO.Manufacturer,
 		Model:           deviceProfileDTO.Model,
 		Labels:          deviceProfileDTO.Labels,
+		DeviceService:   deviceProfileDTO.DeviceService,
 		DeviceResources: ToDeviceResourceModels(deviceProfileDTO.DeviceResources),
 		DeviceCommands:  ToDeviceCommandModels(deviceProfileDTO.DeviceCommands),
 	}
@@ -95,6 +98,7 @@ func FromDeviceProfileModelToDTO(deviceProfile models.DeviceProfile) DeviceProfi
 		Manufacturer:    deviceProfile.Manufacturer,
 		Model:           deviceProfile.Model,
 		Labels:          deviceProfile.Labels,
+		DeviceService:   deviceProfile.DeviceService,
 		DeviceResources: FromDeviceResourceModelsToDTOs(deviceProfile.DeviceResources),
 		DeviceCommands:  FromDeviceCommandModelsToDTOs(deviceProfile.DeviceCommands),
 	}
@@ -131,7 +135,7 @@ func ValidateDeviceProfileDTO(profile DeviceProfile) error {
 			}
 			// Check the ReadWrite whether is align to the deviceResource
 			if !validReadWritePermission(profile.DeviceResources, ro.DeviceResource, command.ReadWrite) {
-				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("device command's ReadWrite permission '%s' doesn't align the device resource", command.ReadWrite), nil)
+				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("命令读写权限 '%s' 超出资源读写权限", command.ReadWrite), nil)
 			}
 		}
 	}
