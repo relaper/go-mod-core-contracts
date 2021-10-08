@@ -16,6 +16,7 @@ type DeviceProfile struct {
 	Manufacturer    string
 	Model           string
 	Labels          []string
+	DeviceService   string // 用于可视化编辑
 	DeviceResources []DeviceResource
 	DeviceCommands  []DeviceCommand
 }
