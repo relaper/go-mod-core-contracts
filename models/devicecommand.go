@@ -10,6 +10,7 @@ package models
 // Model fields are same as the DTOs documented by this swagger. Exceptions, if any, are noted below.
 type DeviceCommand struct {
 	Name               string
+	Description        string
 	IsHidden           bool
 	ReadWrite          string
 	ResourceOperations []ResourceOperation

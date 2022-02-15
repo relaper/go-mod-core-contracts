@@ -11,6 +11,7 @@ import "github.com/edgexfoundry/go-mod-core-contracts/v2/models"
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/DeviceCommand
 type DeviceCommand struct {
 	Name               string              `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Description        string              `json:"description" yaml:"description"`
 	IsHidden           bool                `json:"isHidden" yaml:"isHidden"`
 	ReadWrite          string              `json:"readWrite" yaml:"readWrite" validate:"required,oneof='R' 'W' 'RW'"`
 	ResourceOperations []ResourceOperation `json:"resourceOperations" yaml:"resourceOperations" validate:"gt=0,dive"`
@@ -24,6 +25,7 @@ func ToDeviceCommandModel(dto DeviceCommand) models.DeviceCommand {
 	}
 	return models.DeviceCommand{
 		Name:               dto.Name,
+		Description:        dto.Description,
 		IsHidden:           dto.IsHidden,
 		ReadWrite:          dto.ReadWrite,
 		ResourceOperations: resourceOperations,
@@ -47,6 +49,7 @@ func FromDeviceCommandModelToDTO(d models.DeviceCommand) DeviceCommand {
 	}
 	return DeviceCommand{
 		Name:               d.Name,
+		Description:        d.Description,
 		IsHidden:           d.IsHidden,
 		ReadWrite:          d.ReadWrite,
 		ResourceOperations: resourceOperations,
