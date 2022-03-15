@@ -28,6 +28,7 @@ type CoreCommand struct {
 // CoreCommandParameter and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-command/2.1.0#/CoreCommandParameter
 type CoreCommandParameter struct {
-	ResourceName string `json:"resourceName"`
-	ValueType    string `json:"valueType"`
+	ResourceName        string `json:"resourceName"`
+	ResourceDescription string `json:"resourceDescription"`
+	ValueType           string `json:"valueType"`
 }
