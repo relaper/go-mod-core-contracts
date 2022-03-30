@@ -69,7 +69,7 @@ func (a *AddEventRequest) Unmarshal(b []byte, f unmarshal) error {
 		Event dtos.Event
 	}
 	if err := f(b, &addEvent); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal the byte array.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化为字节数组失败", err)
 	}
 
 	*a = AddEventRequest(addEvent)
@@ -109,12 +109,12 @@ func (a *AddEventRequest) Encode() ([]byte, string, error) {
 	case common.ContentTypeCBOR:
 		encodedData, err = cbor.Marshal(a)
 		if err != nil {
-			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to encode AddEventRequest to CBOR", err)
+			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "序列化 AddEventRequest 为 CBOR 失败", err)
 		}
 	case common.ContentTypeJSON:
 		encodedData, err = json.Marshal(a)
 		if err != nil {
-			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to encode AddEventRequest to JSON", err)
+			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "序列化 AddEventRequest 为 JSON 失败", err)
 		}
 	}
 

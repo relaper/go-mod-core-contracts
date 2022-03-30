@@ -43,7 +43,7 @@ func (request *AddIntervalActionRequest) UnmarshalJSON(b []byte) error {
 		Action dtos.IntervalAction
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*request = AddIntervalActionRequest(alias)
@@ -94,7 +94,7 @@ func (request *UpdateIntervalActionRequest) UnmarshalJSON(b []byte) error {
 		Action dtos.UpdateIntervalAction
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*request = UpdateIntervalActionRequest(alias)

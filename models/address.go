@@ -20,7 +20,7 @@ type Address interface {
 func instantiateAddress(i interface{}) (address Address, err error) {
 	a, err := json.Marshal(i)
 	if err != nil {
-		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to marshal address.", err)
+		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "地址有误", err)
 	}
 	return unmarshalAddress(a)
 }
@@ -30,29 +30,29 @@ func unmarshalAddress(b []byte) (address Address, err error) {
 		Type string
 	}
 	if err = json.Unmarshal(b, &alias); err != nil {
-		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal address.", err)
+		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "地址有误", err)
 	}
 	switch alias.Type {
 	case common.REST:
 		var rest RESTAddress
 		if err = json.Unmarshal(b, &rest); err != nil {
-			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal REST address.", err)
+			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "REST地址有误", err)
 		}
 		address = rest
 	case common.MQTT:
 		var mqtt MQTTPubAddress
 		if err = json.Unmarshal(b, &mqtt); err != nil {
-			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal MQTT address.", err)
+			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT 地址有误", err)
 		}
 		address = mqtt
 	case common.EMAIL:
 		var mail EmailAddress
 		if err = json.Unmarshal(b, &mail); err != nil {
-			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal Email address.", err)
+			return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Email 地址有误", err)
 		}
 		address = mail
 	default:
-		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "Unsupported address type", err)
+		return address, errors.NewCommonEdgeX(errors.KindContractInvalid, "不支持的地址类型", err)
 	}
 	return address, nil
 }

@@ -36,7 +36,7 @@ func (d *AddDeviceRequest) UnmarshalJSON(b []byte) error {
 		Device dtos.Device
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*d = AddDeviceRequest(alias)
@@ -78,7 +78,7 @@ func (d *UpdateDeviceRequest) UnmarshalJSON(b []byte) error {
 		Device dtos.UpdateDevice
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*d = UpdateDeviceRequest(alias)

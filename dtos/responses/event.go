@@ -65,12 +65,12 @@ func (e *EventResponse) Encode() ([]byte, string, error) {
 	case common.ContentTypeCBOR:
 		encodedData, err = cbor.Marshal(e)
 		if err != nil {
-			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to encode EventResponse to CBOR", err)
+			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "序列化 EventResponse 为 CBOR 失败", err)
 		}
 	case common.ContentTypeJSON:
 		encodedData, err = json.Marshal(e)
 		if err != nil {
-			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to encode EventResponse to JSON", err)
+			return nil, "", errors.NewCommonEdgeX(errors.KindContractInvalid, "序列化 EventResponse 为 JSON 失败", err)
 		}
 	}
 

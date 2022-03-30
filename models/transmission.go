@@ -37,7 +37,7 @@ func (trans *Transmission) UnmarshalJSON(b []byte) error {
 		Status           TransmissionStatus
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal transmission.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "transmission反序列化失败", err)
 	}
 
 	channel, err := instantiateAddress(alias.Channel)

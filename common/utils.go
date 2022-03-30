@@ -32,5 +32,5 @@ func NormalizeValueType(valueType string) (string, error) {
 			return v, nil
 		}
 	}
-	return "", errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("unable to normalize the unknown value type %s", valueType), nil)
+	return "", errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("数据类型不支持 %s", valueType), nil)
 }

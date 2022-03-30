@@ -53,7 +53,7 @@ func (dp *DeviceProfile) UnmarshalYAML(unmarshal func(interface{}) error) error 
 		DeviceCommands  []DeviceCommand  `yaml:"deviceCommands"`
 	}
 	if err := unmarshal(&alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to unmarshal request body as YAML.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为 YAML 失败", err)
 	}
 	*dp = DeviceProfile(alias)
 
@@ -110,11 +110,11 @@ func ValidateDeviceProfileDTO(profile DeviceProfile) error {
 	for _, resource := range profile.DeviceResources {
 		if resource.Properties.ValueType == common.ValueTypeBinary &&
 			strings.Contains(resource.Properties.ReadWrite, common.ReadWrite_W) {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("write permission not support %s value type for resource '%s'", common.ValueTypeBinary, resource.Name), nil)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("属性 %s(%s) 不支持写权限'", resource.Name, common.ValueTypeBinary), nil)
 		}
 		// deviceResource name should not duplicated
 		if dupCheck[resource.Name] {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("device resource %s is duplicated", resource.Name), nil)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("属性 %s 重复", resource.Name), nil)
 		}
 		dupCheck[resource.Name] = true
 	}
@@ -123,7 +123,7 @@ func ValidateDeviceProfileDTO(profile DeviceProfile) error {
 	for _, command := range profile.DeviceCommands {
 		// deviceCommand name should not duplicated
 		if dupCheck[command.Name] {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("device command %s is duplicated", command.Name), nil)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("命令 %s 重复", command.Name), nil)
 		}
 		dupCheck[command.Name] = true
 
@@ -131,7 +131,7 @@ func ValidateDeviceProfileDTO(profile DeviceProfile) error {
 		for _, ro := range resourceOperations {
 			// ResourceOperations referenced in deviceCommands must exist
 			if !deviceResourcesContains(profile.DeviceResources, ro.DeviceResource) {
-				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("device command's resource %s doesn't match any device resource", ro.DeviceResource), nil)
+				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("命令属性 %s 不匹配设备属性", ro.DeviceResource), nil)
 			}
 			// Check the ReadWrite whether is align to the deviceResource
 			if !validReadWritePermission(profile.DeviceResources, ro.DeviceResource, command.ReadWrite) {

@@ -47,11 +47,11 @@ func (client *deviceServiceCommandClient) GetCommand(ctx context.Context, baseUr
 	response := &responses.EventResponse{}
 	if contentType == common.ContentTypeCBOR {
 		if err = cbor.Unmarshal(res, response); err != nil {
-			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to decode the cbor response", err)
+			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, "解析 cbor 响应失败", err)
 		}
 	} else {
 		if err = json.Unmarshal(res, response); err != nil {
-			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to decode the json response", err)
+			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, "解析 json 响应失败", err)
 		}
 	}
 	return response, nil

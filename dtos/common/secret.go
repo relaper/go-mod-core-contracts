@@ -53,14 +53,14 @@ func (sr *SecretRequest) UnmarshalJSON(b []byte) error {
 	}
 
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal SecretRequest body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化 SecretRequest 失败", err)
 	}
 
 	*sr = SecretRequest(alias)
 
 	// validate SecretRequest DTO
 	if err := sr.Validate(); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "SecretRequest validation failed.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "SecretRequest 验证失败", err)
 	}
 	return nil
 }

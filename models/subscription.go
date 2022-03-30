@@ -46,7 +46,7 @@ func (subscription *Subscription) UnmarshalJSON(b []byte) error {
 		AdminState     AdminState
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal intervalAction.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "intervalAction 反序列化失败", err)
 	}
 	channels := make([]Address, len(alias.Channels))
 	for i, c := range alias.Channels {

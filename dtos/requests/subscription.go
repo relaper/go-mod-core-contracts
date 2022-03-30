@@ -36,7 +36,7 @@ func (request AddSubscriptionRequest) Validate() error {
 		if err != nil {
 			return errors.NewCommonEdgeXWrapper(err)
 		} else if !contains(supportedChannelTypes, c.Type) {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT is not valid type for Channel", nil)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT 不是 Channel 的合法类型", nil)
 		}
 	}
 	return nil
@@ -49,7 +49,7 @@ func (request *AddSubscriptionRequest) UnmarshalJSON(b []byte) error {
 		Subscription dtos.Subscription
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*request = AddSubscriptionRequest(alias)
@@ -89,12 +89,12 @@ func (request UpdateSubscriptionRequest) Validate() error {
 		if err != nil {
 			return errors.NewCommonEdgeXWrapper(err)
 		} else if !contains(supportedChannelTypes, c.Type) {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT is not valid type for Channel", nil)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT 不是 Channel 的合法类型l", nil)
 		}
 	}
 	if request.Subscription.Categories != nil && request.Subscription.Labels != nil &&
 		len(request.Subscription.Categories) == 0 && len(request.Subscription.Labels) == 0 {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "categories and labels can not be both empty", nil)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "类别及标签不能同时为空", nil)
 	}
 	return nil
 }
@@ -106,7 +106,7 @@ func (request *UpdateSubscriptionRequest) UnmarshalJSON(b []byte) error {
 		Subscription dtos.UpdateSubscription
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*request = UpdateSubscriptionRequest(alias)

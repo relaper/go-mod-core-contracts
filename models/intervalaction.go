@@ -37,7 +37,7 @@ func (intervalAction *IntervalAction) UnmarshalJSON(b []byte) error {
 		AdminState   AdminState
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal intervalAction.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "intervalAction反序列化失败", err)
 	}
 	address, err := instantiateAddress(alias.Address)
 	if err != nil {

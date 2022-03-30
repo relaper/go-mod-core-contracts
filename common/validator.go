@@ -75,27 +75,27 @@ func getErrorMessage(e validator.FieldError) string {
 	var msg string
 	switch tag {
 	case "uuid":
-		msg = fmt.Sprintf("%s field needs a uuid", fieldName)
+		msg = fmt.Sprintf("% 须为UUID", fieldName)
 	case "required":
-		msg = fmt.Sprintf("%s field is required", fieldName)
+		msg = fmt.Sprintf("%s 为必填项", fieldName)
 	case "required_without":
-		msg = fmt.Sprintf("%s field is required if the %s is not present", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s 为必填项（当 %s 为空时）", fieldName, fieldValue)
 	case "len":
-		msg = fmt.Sprintf("The length of %s field is not %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s 长度不为 %s", fieldName, fieldValue)
 	case "oneof":
-		msg = fmt.Sprintf("%s field should be one of %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s 需为 %s", fieldName, fieldValue)
 	case "gt":
-		msg = fmt.Sprintf("%s field should greater than %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s 需大于 %s", fieldName, fieldValue)
 	case dtoDurationTag:
-		msg = fmt.Sprintf("%s field should follows the ISO 8601 Durations format. Eg,100ms, 24h", fieldName)
+		msg = fmt.Sprintf("%s 不是 ISO 8601 Durations 格式. 如,100ms, 24h", fieldName)
 	case dtoUuidTag:
-		msg = fmt.Sprintf("%s field needs a uuid", fieldName)
+		msg = fmt.Sprintf("%s 须为UUID", fieldName)
 	case dtoNoneEmptyStringTag:
-		msg = fmt.Sprintf("%s field should not be empty string", fieldName)
+		msg = fmt.Sprintf("%s 不能为空", fieldName)
 	case dtoRFC3986UnreservedCharTag:
-		msg = fmt.Sprintf("%s field only allows unreserved characters which are ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_~", fieldName)
+		msg = fmt.Sprintf("%s 需由以下字符组成：ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_~", fieldName)
 	default:
-		msg = fmt.Sprintf("%s field validation failed on the %s tag", fieldName, tag)
+		msg = fmt.Sprintf("%s 参数验证失败：%s", fieldName, tag)
 	}
 	return msg
 }

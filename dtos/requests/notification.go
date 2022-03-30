@@ -36,7 +36,7 @@ func (request *AddNotificationRequest) UnmarshalJSON(b []byte) error {
 		Notification dtos.Notification
 	}
 	if err := json.Unmarshal(b, &alias); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "反序列化请求为JSON失败", err)
 	}
 
 	*request = AddNotificationRequest(alias)

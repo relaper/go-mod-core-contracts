@@ -150,20 +150,20 @@ func convertInterfaceValue(valueType string, value interface{}) (string, error) 
 	case common.ValueTypeFloat32Array:
 		arrayValue, ok := value.([]float32)
 		if !ok {
-			return "", fmt.Errorf("unable to cast value to []float32 for %s", valueType)
+			return "", fmt.Errorf("转换数据 %s 为 []float32 失败", valueType)
 		}
 
 		return convertFloat32ArrayValue(arrayValue)
 	case common.ValueTypeFloat64Array:
 		arrayValue, ok := value.([]float64)
 		if !ok {
-			return "", fmt.Errorf("unable to cast value to []float64 for %s", valueType)
+			return "", fmt.Errorf("转换数据 %s 为 []float64 失败", valueType)
 		}
 
 		return convertFloat64ArrayValue(arrayValue)
 
 	default:
-		return "", fmt.Errorf("invalid simple reading type of %s", valueType)
+		return "", fmt.Errorf("数据类型 %s 不合法", valueType)
 	}
 }
 
@@ -246,13 +246,13 @@ func convertFloat64ArrayValue(values []float64) (string, error) {
 func validateType(valueType string, kind reflect.Kind, value interface{}) error {
 	if reflect.TypeOf(value).Kind() == reflect.Slice {
 		if kind != reflect.TypeOf(value).Elem().Kind() {
-			return fmt.Errorf("slice of type of value `%s` not a match for specified ValueType '%s", kind.String(), valueType)
+			return fmt.Errorf("`%s`切片 不匹配数据类型 '%s", kind.String(), valueType)
 		}
 		return nil
 	}
 
 	if kind != reflect.TypeOf(value).Kind() {
-		return fmt.Errorf("type of value `%s` not a match for specified ValueType '%s", kind.String(), valueType)
+		return fmt.Errorf("`%s` 不匹配数据类型 '%s", kind.String(), valueType)
 	}
 
 	return nil

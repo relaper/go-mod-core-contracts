@@ -81,7 +81,7 @@ func (le LogEntry) Validate() (bool, errors.EdgeX) {
 				return true, nil
 			}
 		}
-		return false, errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("Invalid level in LogEntry: %s", le.Level), nil)
+		return false, errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("告警级别有误: %s", le.Level), nil)
 	}
 	return le.isValidated, nil
 }

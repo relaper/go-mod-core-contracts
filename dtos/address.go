@@ -26,25 +26,25 @@ type Address struct {
 func (a *Address) Validate() error {
 	err := common.Validate(a)
 	if err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid Address.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "地址错误", err)
 	}
 	switch a.Type {
 	case common.REST:
 		err = common.Validate(a.RESTAddress)
 		if err != nil {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid RESTAddress.", err)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "REST地址错误", err)
 		}
 		break
 	case common.MQTT:
 		err = common.Validate(a.MQTTPubAddress)
 		if err != nil {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid MQTTPubAddress.", err)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "MQTT发布地址错误", err)
 		}
 		break
 	case common.EMAIL:
 		err = common.Validate(a.EmailAddress)
 		if err != nil {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid EmailAddress.", err)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "Email地址错误", err)
 		}
 		break
 	}
