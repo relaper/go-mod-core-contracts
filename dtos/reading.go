@@ -180,7 +180,7 @@ func convertFloatValue(valueType string, kind reflect.Kind, value interface{}) (
 		return "", err
 	}
 
-	return fmt.Sprintf("%e", value), nil
+	return fmt.Sprintf("%f", value), nil
 }
 
 func convertSimpleArrayValue(valueType string, kind reflect.Kind, value interface{}) (string, error) {
