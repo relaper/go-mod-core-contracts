@@ -75,7 +75,7 @@ func getErrorMessage(e validator.FieldError) string {
 	var msg string
 	switch tag {
 	case "uuid":
-		msg = fmt.Sprintf("% 须为UUID", fieldName)
+		msg = fmt.Sprintf("%s 须为 UUID", fieldName)
 	case "required":
 		msg = fmt.Sprintf("%s 为必填项", fieldName)
 	case "required_without":

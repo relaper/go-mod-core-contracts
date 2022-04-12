@@ -33,7 +33,7 @@ type DeviceProfile struct {
 func (dp *DeviceProfile) Validate() error {
 	err := common.Validate(dp)
 	if err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid DeviceProfile.", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "模型不合法", err)
 	}
 	return ValidateDeviceProfileDTO(*dp)
 }
