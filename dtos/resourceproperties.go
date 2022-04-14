@@ -10,8 +10,8 @@ import "github.com/edgexfoundry/go-mod-core-contracts/v2/models"
 // ResourceProperties and its properties care defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/ResourceProperties
 type ResourceProperties struct {
-	ValueType    string `json:"valueType" yaml:"valueType" validate:"required,edgex-dto-value-type"`
-	ReadWrite    string `json:"readWrite" yaml:"readWrite" validate:"required,oneof='R' 'W' 'RW'"`
+	ValueType    string `json:"valueType" yaml:"valueType" validate:"required,edgex-dto-value-type" validate_name:"数值类型"`
+	ReadWrite    string `json:"readWrite" yaml:"readWrite" validate:"required,oneof='R' 'W' 'RW'" validate_name:"读写权限"`
 	Units        string `json:"units" yaml:"units"`
 	Minimum      string `json:"minimum" yaml:"minimum"`
 	Maximum      string `json:"maximum" yaml:"maximum"`

@@ -13,13 +13,13 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-notifications/2.1.0#/Transmission
 type Transmission struct {
 	Created          int64                `json:"created,omitempty"`
-	Id               string               `json:"id,omitempty" validate:"omitempty,uuid"`
-	Channel          Address              `json:"channel" validate:"required"`
-	NotificationId   string               `json:"notificationId" validate:"required"`
-	SubscriptionName string               `json:"subscriptionName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id               string               `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"ID"`
+	Channel          Address              `json:"channel" validate:"required" validate_name:"通道"`
+	NotificationId   string               `json:"notificationId" validate:"required" validate_name:"通知ID"`
+	SubscriptionName string               `json:"subscriptionName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
 	Records          []TransmissionRecord `json:"records,omitempty"`
 	ResendCount      int                  `json:"resendCount,omitempty"`
-	Status           string               `json:"status" validate:"required,oneof='ACKNOWLEDGED' 'FAILED' 'SENT' 'ESCALATED' 'RESENDING'"`
+	Status           string               `json:"status" validate:"required,oneof='ACKNOWLEDGED' 'FAILED' 'SENT' 'ESCALATED' 'RESENDING'" validate_name:"状态"`
 }
 
 // ToTransmissionModel transforms a Transmission DTO to a Transmission Model

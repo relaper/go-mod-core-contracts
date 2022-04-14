@@ -18,8 +18,8 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/system-agent/2.1.0#/OperationRequest
 type OperationRequest struct {
 	dtoCommon.BaseRequest `json:",inline"`
-	ServiceName           string `json:"serviceName" validate:"required"`
-	Action                string `json:"action" validate:"oneof='start' 'stop' 'restart'"`
+	ServiceName           string `json:"serviceName" validate:"required" validate_name:"驱动"`
+	Action                string `json:"action" validate:"oneof='start' 'stop' 'restart'" validate_name:"动作"`
 }
 
 // Validate satisfies the Validator interface

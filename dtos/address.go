@@ -12,10 +12,10 @@ import (
 )
 
 type Address struct {
-	Type string `json:"type" validate:"oneof='REST' 'MQTT' 'EMAIL'"`
+	Type string `json:"type" validate:"oneof='REST' 'MQTT' 'EMAIL'" validate_name:"节点类型"`
 
-	Host string `json:"host" validate:"required_unless=Type EMAIL"`
-	Port int    `json:"port" validate:"required_unless=Type EMAIL"`
+	Host string `json:"host" validate:"required_unless=Type EMAIL" validate_name:"地址"`
+	Port int    `json:"port" validate:"required_unless=Type EMAIL" validate_name:"端口"`
 
 	RESTAddress    `json:",inline" validate:"-"`
 	MQTTPubAddress `json:",inline" validate:"-"`
@@ -54,7 +54,7 @@ func (a *Address) Validate() error {
 
 type RESTAddress struct {
 	Path       string `json:"path,omitempty"`
-	HTTPMethod string `json:"httpMethod,omitempty" validate:"required,oneof='GET' 'HEAD' 'POST' 'PUT' 'PATCH' 'DELETE' 'TRACE' 'CONNECT'"`
+	HTTPMethod string `json:"httpMethod,omitempty" validate:"required,oneof='GET' 'HEAD' 'POST' 'PUT' 'PATCH' 'DELETE' 'TRACE' 'CONNECT'" validate_name:"HTTP方法"`
 }
 
 func NewRESTAddress(host string, port int, httpMethod string) Address {
@@ -69,8 +69,8 @@ func NewRESTAddress(host string, port int, httpMethod string) Address {
 }
 
 type MQTTPubAddress struct {
-	Publisher      string `json:"publisher,omitempty" validate:"required"`
-	Topic          string `json:"topic,omitempty" validate:"required"`
+	Publisher      string `json:"publisher,omitempty" validate:"required" validate_name:"发布者"`
+	Topic          string `json:"topic,omitempty" validate:"required" validate_name:"主题"`
 	QoS            int    `json:"qos,omitempty"`
 	KeepAlive      int    `json:"keepAlive,omitempty"`
 	Retained       bool   `json:"retained,omitempty"`
@@ -91,7 +91,7 @@ func NewMQTTAddress(host string, port int, publisher string, topic string) Addre
 }
 
 type EmailAddress struct {
-	Recipients []string `json:"recipients,omitempty" validate:"gt=0,dive,email"`
+	Recipients []string `json:"recipients,omitempty" validate:"gt=0,dive,email" validate_name:"接收者"`
 }
 
 func NewEmailAddress(recipients []string) Address {

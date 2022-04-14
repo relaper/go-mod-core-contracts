@@ -12,7 +12,7 @@ import (
 )
 
 type TransmissionRecord struct {
-	Status   string `json:"status,omitempty" validate:"omitempty,oneof='ACKNOWLEDGED' 'FAILED' 'SENT' 'ESCALATED'"`
+	Status   string `json:"status,omitempty" validate:"omitempty,oneof='ACKNOWLEDGED' 'FAILED' 'SENT' 'ESCALATED'" validate_name:"状态"`
 	Response string `json:"response,omitempty"`
 	Sent     int64  `json:"sent,omitempty"`
 }

@@ -53,13 +53,15 @@ func init() {
 
 // Validate function will use the validator package to validate the struct annotation
 func Validate(a interface{}) error {
+	aTyp := reflect.TypeOf(a)
 	err := val.Struct(a)
+
 	// translate all error at once
 	if err != nil {
 		errs := err.(validator.ValidationErrors)
 		var errMsg []string
 		for _, e := range errs {
-			errMsg = append(errMsg, getErrorMessage(e))
+			errMsg = append(errMsg, getErrorMessage(aTyp, e))
 		}
 		return errors.NewCommonEdgeX(errors.KindContractInvalid, strings.Join(errMsg, "; "), nil)
 	}
@@ -67,10 +69,16 @@ func Validate(a interface{}) error {
 }
 
 // Internal: generate representative validation error messages
-func getErrorMessage(e validator.FieldError) string {
+func getErrorMessage(aTyp reflect.Type, e validator.FieldError) string {
+	fieldName := e.StructNamespace()
+	if field, ok := aTyp.FieldByName(e.Field()); ok {
+		if validateName := field.Tag.Get("validate_name"); validateName != "" {
+			fieldName = validateName
+		}
+	}
+
 	tag := e.Tag()
 	// StructNamespace returns the namespace for the field error, with the field's actual name.
-	fieldName := e.StructNamespace()
 	fieldValue := e.Param()
 	var msg string
 	switch tag {
@@ -87,13 +95,13 @@ func getErrorMessage(e validator.FieldError) string {
 	case "gt":
 		msg = fmt.Sprintf("%s 需大于 %s", fieldName, fieldValue)
 	case dtoDurationTag:
-		msg = fmt.Sprintf("%s 不是 ISO 8601 Durations 格式. 如,100ms, 24h", fieldName)
+		msg = fmt.Sprintf("%s 不是合法时间间隔格式（ISO 8601 Durations：100ms, 24h）", fieldName)
 	case dtoUuidTag:
 		msg = fmt.Sprintf("%s 须为UUID", fieldName)
 	case dtoNoneEmptyStringTag:
 		msg = fmt.Sprintf("%s 不能为空", fieldName)
 	case dtoRFC3986UnreservedCharTag:
-		msg = fmt.Sprintf("%s 需由以下字符组成：ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_~", fieldName)
+		msg = fmt.Sprintf("%s 需由字母、数字、_、-或~组成", fieldName)
 	default:
 		msg = fmt.Sprintf("%s 参数验证失败：%s", fieldName, tag)
 	}

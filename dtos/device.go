@@ -13,37 +13,37 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/Device
 type Device struct {
 	DBTimestamp    `json:",inline"`
-	Id             string                        `json:"id,omitempty" validate:"omitempty,uuid"`
-	Name           string                        `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id             string                        `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"设备ID"`
+	Name           string                        `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
 	Description    string                        `json:"description,omitempty"`
-	AdminState     string                        `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'"`
-	OperatingState string                        `json:"operatingState" validate:"oneof='UP' 'DOWN' 'UNKNOWN'"`
+	AdminState     string                        `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
+	OperatingState string                        `json:"operatingState" validate:"oneof='UP' 'DOWN' 'UNKNOWN'" validate_name:"操作状态"`
 	LastConnected  int64                         `json:"lastConnected,omitempty"`
 	LastReported   int64                         `json:"lastReported,omitempty"`
 	Labels         []string                      `json:"labels,omitempty"`
 	Location       interface{}                   `json:"location,omitempty"`
-	ServiceName    string                        `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	ProfileName    string                        `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	AutoEvents     []AutoEvent                   `json:"autoEvents,omitempty" validate:"dive"`
-	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"required,gt=0"`
+	ServiceName    string                        `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联驱动"`
+	ProfileName    string                        `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联模型"`
+	AutoEvents     []AutoEvent                   `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件列表"`
+	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"required,gt=0" validate_name:"协议配置"`
 }
 
 // UpdateDevice and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/UpdateDevice
 type UpdateDevice struct {
-	Id             *string                       `json:"id" validate:"required_without=Name,edgex-dto-uuid"`
-	Name           *string                       `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Description    *string                       `json:"description" validate:"omitempty"`
-	AdminState     *string                       `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'"`
-	OperatingState *string                       `json:"operatingState" validate:"omitempty,oneof='UP' 'DOWN' 'UNKNOWN'"`
+	Id             *string                       `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"设备ID"`
+	Name           *string                       `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
+	Description    *string                       `json:"description" validate:"omitempty" validate_name:"设备描述"`
+	AdminState     *string                       `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
+	OperatingState *string                       `json:"operatingState" validate:"omitempty,oneof='UP' 'DOWN' 'UNKNOWN'" validate_name:"操作状态"`
 	LastConnected  *int64                        `json:"lastConnected"`
 	LastReported   *int64                        `json:"lastReported"`
-	ServiceName    *string                       `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	ProfileName    *string                       `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	ServiceName    *string                       `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联驱动"`
+	ProfileName    *string                       `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联模型"`
 	Labels         []string                      `json:"labels"`
 	Location       interface{}                   `json:"location"`
-	AutoEvents     []AutoEvent                   `json:"autoEvents" validate:"dive"`
-	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"omitempty,gt=0"`
+	AutoEvents     []AutoEvent                   `json:"autoEvents" validate:"dive" validate_name:"事件列表"`
+	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"omitempty,gt=0" validate_name:"协议配置"`
 	Notify         *bool                         `json:"notify"`
 }
 

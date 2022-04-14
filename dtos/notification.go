@@ -15,15 +15,15 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-notifications/2.1.0#/Notification
 type Notification struct {
 	DBTimestamp `json:",inline"`
-	Id          string   `json:"id,omitempty" validate:"omitempty,uuid"`
-	Category    string   `json:"category,omitempty" validate:"required_without=Labels,omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Labels      []string `json:"labels,omitempty" validate:"required_without=Category,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Content     string   `json:"content" validate:"required,edgex-dto-none-empty-string"`
+	Id          string   `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"通知ID"`
+	Category    string   `json:"category,omitempty" validate:"required_without=Labels,omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别"`
+	Labels      []string `json:"labels,omitempty" validate:"required_without=Category,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签"`
+	Content     string   `json:"content" validate:"required,edgex-dto-none-empty-string" validate_name:"内容"`
 	ContentType string   `json:"contentType,omitempty"`
 	Description string   `json:"description,omitempty"`
-	Sender      string   `json:"sender" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Severity    string   `json:"severity" validate:"required,oneof='MINOR' 'NORMAL' 'CRITICAL'"`
-	Status      string   `json:"status,omitempty" validate:"omitempty,oneof='NEW' 'PROCESSED' 'ESCALATED'"`
+	Sender      string   `json:"sender" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"发送者"`
+	Severity    string   `json:"severity" validate:"required,oneof='MINOR' 'NORMAL' 'CRITICAL'" validate_name:"告警级别"`
+	Status      string   `json:"status,omitempty" validate:"omitempty,oneof='NEW' 'PROCESSED' 'ESCALATED'" validate_name:"状态"`
 }
 
 // NewNotification creates and returns a Notification DTO

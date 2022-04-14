@@ -13,31 +13,31 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-notifications/2.1.0#/Subscription
 type Subscription struct {
 	DBTimestamp    `json:",inline"`
-	Id             string    `json:"id,omitempty" validate:"omitempty,uuid"`
-	Name           string    `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Channels       []Address `json:"channels" validate:"required,gt=0,dive"`
-	Receiver       string    `json:"receiver" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Categories     []string  `json:"categories,omitempty" validate:"required_without=Labels,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Labels         []string  `json:"labels,omitempty" validate:"required_without=Categories,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id             string    `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"订阅ID"`
+	Name           string    `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
+	Channels       []Address `json:"channels" validate:"required,gt=0,dive" validate_name:"通道列表"`
+	Receiver       string    `json:"receiver" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接收者"`
+	Categories     []string  `json:"categories,omitempty" validate:"required_without=Labels,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`
+	Labels         []string  `json:"labels,omitempty" validate:"required_without=Categories,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签列表"`
 	Description    string    `json:"description,omitempty"`
 	ResendLimit    int       `json:"resendLimit,omitempty"`
-	ResendInterval string    `json:"resendInterval,omitempty" validate:"omitempty,edgex-dto-duration"`
-	AdminState     string    `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'"`
+	ResendInterval string    `json:"resendInterval,omitempty" validate:"omitempty,edgex-dto-duration" validate_name:"重发间隔"`
+	AdminState     string    `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 }
 
 // UpdateSubscription and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-notifications/2.1.0#/UpdateSubscription
 type UpdateSubscription struct {
-	Id             *string   `json:"id" validate:"required_without=Name,edgex-dto-uuid"`
-	Name           *string   `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Channels       []Address `json:"channels" validate:"omitempty,gt=0,dive"`
-	Receiver       *string   `json:"receiver" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Categories     []string  `json:"categories" validate:"omitempty,dive,gt=0,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
-	Labels         []string  `json:"labels" validate:"omitempty,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id             *string   `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"订阅ID"`
+	Name           *string   `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
+	Channels       []Address `json:"channels" validate:"omitempty,gt=0,dive" validate_name:"通道列表"`
+	Receiver       *string   `json:"receiver" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接受者"`
+	Categories     []string  `json:"categories" validate:"omitempty,dive,gt=0,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`
+	Labels         []string  `json:"labels" validate:"omitempty,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签列表"`
 	Description    *string   `json:"description"`
 	ResendLimit    *int      `json:"resendLimit"`
-	ResendInterval *string   `json:"resendInterval" validate:"omitempty,edgex-dto-duration"`
-	AdminState     *string   `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'"`
+	ResendInterval *string   `json:"resendInterval" validate:"omitempty,edgex-dto-duration" validate_name:"重发间隔"`
+	AdminState     *string   `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 }
 
 // ToSubscriptionModel transforms the Subscription DTO to the Subscription Model

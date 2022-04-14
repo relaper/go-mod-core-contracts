@@ -23,7 +23,7 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-data/2.1.0#/AddEventRequest
 type AddEventRequest struct {
 	dtoCommon.BaseRequest `json:",inline"`
-	Event                 dtos.Event `json:"event" validate:"required"`
+	Event                 dtos.Event `json:"event" validate:"required" validate_name:"事件"`
 }
 
 // NewAddEventRequest creates, initializes and returns an AddEventRequests

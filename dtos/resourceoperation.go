@@ -10,7 +10,7 @@ import "github.com/edgexfoundry/go-mod-core-contracts/v2/models"
 // ResourceOperation and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/ResourceOperation
 type ResourceOperation struct {
-	DeviceResource string            `json:"deviceResource" yaml:"deviceResource" validate:"required"` // The replacement of Object field
+	DeviceResource string            `json:"deviceResource" yaml:"deviceResource" validate:"required" validate_name:"设备属性"` // The replacement of Object field
 	DefaultValue   string            `json:"defaultValue" yaml:"defaultValue"`
 	Mappings       map[string]string `json:"mappings" yaml:"mappings"`
 }

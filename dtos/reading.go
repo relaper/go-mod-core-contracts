@@ -21,11 +21,11 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-data/2.1.0#/BaseReading
 type BaseReading struct {
 	Id            string `json:"id,omitempty"`
-	Origin        int64  `json:"origin" validate:"required"`
-	DeviceName    string `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars"`
-	ResourceName  string `json:"resourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars"`
-	ProfileName   string `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars"`
-	ValueType     string `json:"valueType" validate:"required,edgex-dto-value-type"`
+	Origin        int64  `json:"origin" validate:"required" validate_name:"原始时间"`
+	DeviceName    string `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
+	ResourceName  string `json:"resourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"属性名称"`
+	ProfileName   string `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
+	ValueType     string `json:"valueType" validate:"required,edgex-dto-value-type" validate_name:"数据类型"`
 	BinaryReading `json:",inline" validate:"-"`
 	SimpleReading `json:",inline" validate:"-"`
 	ObjectReading `json:",inline" validate:"-"`
@@ -34,20 +34,20 @@ type BaseReading struct {
 // SimpleReading and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-data/2.1.0#/SimpleReading
 type SimpleReading struct {
-	Value string `json:"value,omitempty" validate:"required"`
+	Value string `json:"value,omitempty" validate:"required" validate_name:"数值"`
 }
 
 // BinaryReading and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-data/2.1.0#/BinaryReading
 type BinaryReading struct {
-	BinaryValue []byte `json:"binaryValue,omitempty" validate:"gt=0,required"`
-	MediaType   string `json:"mediaType,omitempty" validate:"required"`
+	BinaryValue []byte `json:"binaryValue,omitempty" validate:"gt=0,required" validate_name:"二进制数值"`
+	MediaType   string `json:"mediaType,omitempty" validate:"required" validate_name:"媒体类型"`
 }
 
 // ObjectReading and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-data/2.1.0#/ObjectReading
 type ObjectReading struct {
-	ObjectValue interface{} `json:"objectValue,omitempty" validate:"required"`
+	ObjectValue interface{} `json:"objectValue,omitempty" validate:"required" validate_name:"对象数值"`
 }
 
 func newBaseReading(profileName string, deviceName string, resourceName string, valueType string) BaseReading {

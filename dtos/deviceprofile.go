@@ -18,15 +18,15 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/DeviceProfile
 type DeviceProfile struct {
 	DBTimestamp     `json:",inline"`
-	Id              string           `json:"id" validate:"omitempty,uuid"`
-	Name            string           `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id              string           `json:"id" validate:"omitempty,uuid" validate_name:"模型ID"`
+	Name            string           `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
 	Manufacturer    string           `json:"manufacturer" yaml:"manufacturer"`
 	Description     string           `json:"description" yaml:"description"`
 	Model           string           `json:"model" yaml:"model"`
 	Labels          []string         `json:"labels" yaml:"labels,flow"`
 	DeviceService   string           `json:"deviceService" yaml:"deviceService"` // 这里不进行验证了，否则无法兼容
-	DeviceResources []DeviceResource `json:"deviceResources" yaml:"deviceResources" validate:"required,gt=0,dive"`
-	DeviceCommands  []DeviceCommand  `json:"deviceCommands" yaml:"deviceCommands" validate:"dive"`
+	DeviceResources []DeviceResource `json:"deviceResources" yaml:"deviceResources" validate:"required,gt=0,dive" validate_name:"属性列表"`
+	DeviceCommands  []DeviceCommand  `json:"deviceCommands" yaml:"deviceCommands" validate:"dive" validate_name:"命令列表"`
 }
 
 // Validate satisfies the Validator interface

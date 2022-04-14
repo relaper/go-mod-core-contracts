@@ -13,27 +13,27 @@ import (
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/DeviceService
 type DeviceService struct {
 	DBTimestamp   `json:",inline"`
-	Id            string   `json:"id,omitempty" validate:"omitempty,uuid"`
-	Name          string   `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id            string   `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"驱动ID"`
+	Name          string   `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
 	Description   string   `json:"description,omitempty"`
 	LastConnected int64    `json:"lastConnected,omitempty"`
 	LastReported  int64    `json:"lastReported,omitempty"`
 	Labels        []string `json:"labels,omitempty"`
-	BaseAddress   string   `json:"baseAddress" validate:"required,uri"`
-	AdminState    string   `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'"`
+	BaseAddress   string   `json:"baseAddress" validate:"required,uri" validate_name:"服务地址"`
+	AdminState    string   `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 }
 
 // UpdateDeviceService and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/UpdateDeviceService
 type UpdateDeviceService struct {
-	Id            *string  `json:"id" validate:"required_without=Name,edgex-dto-uuid"`
-	Name          *string  `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars"`
+	Id            *string  `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"驱动ID"`
+	Name          *string  `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
 	Description   *string  `json:"description"`
 	LastConnected *int64   `json:"lastConnected"`
 	LastReported  *int64   `json:"lastReported"`
-	BaseAddress   *string  `json:"baseAddress" validate:"omitempty,uri"`
+	BaseAddress   *string  `json:"baseAddress" validate:"omitempty,uri" validate_name:"服务地址"`
 	Labels        []string `json:"labels"`
-	AdminState    *string  `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'"`
+	AdminState    *string  `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 }
 
 // ToDeviceServiceModel transforms the DeviceService DTO to the DeviceService Model
