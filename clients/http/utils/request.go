@@ -13,6 +13,7 @@ import (
 	"net/url"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
+	dtoCommon "github.com/edgexfoundry/go-mod-core-contracts/v2/dtos/common"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
 )
 
@@ -32,7 +33,7 @@ func GetRequest(ctx context.Context, returnValuePointer interface{}, baseUrl str
 		return nil
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -59,12 +60,15 @@ func GetRequestAndReturnBinaryRes(ctx context.Context, baseUrl string, requestPa
 		return res, resp.Header.Get(common.ContentType), nil
 	}
 
+	var errMessage string
+	baseResp := dtoCommon.BaseResponse{}
+	if err := json.Unmarshal(res, &baseResp); err == nil {
+		errMessage = baseResp.Message
+	} else {
+		errMessage = fmt.Sprintf("请求失败, 状态码: %d, 响应: %s", resp.StatusCode, string(res))
+	}
 	// Handle error response
-	return nil,
-		"",
-		errors.NewCommonEdgeX(
-			errors.KindMapping(resp.StatusCode),
-			fmt.Sprintf("request failed, status code: %d, err: %s", resp.StatusCode, string(res)), nil)
+	return nil, "", errors.NewCommonEdgeX(errors.KindMapping(resp.StatusCode), errMessage, nil)
 }
 
 // GetRequestWithBodyRawData makes the GET request with JSON raw data as request body and return the response
@@ -79,7 +83,7 @@ func GetRequestWithBodyRawData(ctx context.Context, returnValuePointer interface
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -102,7 +106,7 @@ func PostRequest(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -124,7 +128,7 @@ func PostRequestWithRawData(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -146,7 +150,7 @@ func PutRequest(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -168,7 +172,7 @@ func PatchRequest(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -190,7 +194,7 @@ func PostByFileRequest(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -212,7 +216,7 @@ func PutByFileRequest(
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
@@ -229,7 +233,7 @@ func DeleteRequest(ctx context.Context, returnValuePointer interface{}, baseUrl 
 		return errors.NewCommonEdgeXWrapper(err)
 	}
 	if err := json.Unmarshal(res, returnValuePointer); err != nil {
-		return errors.NewCommonEdgeX(errors.KindContractInvalid, "failed to parse the response body", err)
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "解析响应失败", err)
 	}
 	return nil
 }
