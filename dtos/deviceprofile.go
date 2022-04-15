@@ -19,7 +19,7 @@ import (
 type DeviceProfile struct {
 	DBTimestamp     `json:",inline"`
 	Id              string           `json:"id" validate:"omitempty,uuid" validate_name:"模型ID"`
-	Name            string           `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
+	Name            string           `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型标识"`
 	Manufacturer    string           `json:"manufacturer" yaml:"manufacturer"`
 	Description     string           `json:"description" yaml:"description"`
 	Model           string           `json:"model" yaml:"model"`
@@ -131,7 +131,7 @@ func ValidateDeviceProfileDTO(profile DeviceProfile) error {
 		for _, ro := range resourceOperations {
 			// ResourceOperations referenced in deviceCommands must exist
 			if !deviceResourcesContains(profile.DeviceResources, ro.DeviceResource) {
-				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("命令属性 %s 不匹配设备属性", ro.DeviceResource), nil)
+				return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("变量 %s 不匹配设备属性", ro.DeviceResource), nil)
 			}
 			// Check the ReadWrite whether is align to the deviceResource
 			if !validReadWritePermission(profile.DeviceResources, ro.DeviceResource, command.ReadWrite) {

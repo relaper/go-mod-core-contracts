@@ -12,9 +12,9 @@ import (
 // AutoEvent and its properties are defined in the APIv2 specification:
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/AutoEvent
 type AutoEvent struct {
-	Interval          string `json:"interval" validate:"required,edgex-dto-duration" validate_name:"时间间隔"`
+	Interval          string `json:"interval" validate:"required,edgex-dto-duration" validate_name:"时间间隔及间隔单位"`
 	OnChange          bool   `json:"onChange"`
-	SourceName        string `json:"sourceName" validate:"required" validate_name:"属性/命令"`
+	SourceName        string `json:"sourceName" validate:"required" validate_name:"变量"`
 	SourceDescription string `json:"sourceDescription"`
 }
 

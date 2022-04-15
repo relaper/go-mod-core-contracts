@@ -25,7 +25,7 @@ const (
 	KindServerError         ErrKind = "服务错误"
 	KindLimitExceeded       ErrKind = "超出限制"
 	KindStatusConflict      ErrKind = "状态冲突"
-	KindDuplicateName       ErrKind = "名称重复"
+	KindDuplicateName       ErrKind = "标识重复"
 	KindInvalidId           ErrKind = "ID不合法"
 	KindServiceUnavailable  ErrKind = "服务不可用"
 	KindNotAllowed          ErrKind = "操作不允许"
@@ -91,7 +91,8 @@ func (ce CommonEdgeX) Error() string {
 	// ce.err.Error functionality gets the error message of the nested error and which will handle both CommonEdgeX
 	// types and Go standard errors(both wrapped and non-wrapped).
 	if ce.message != "" {
-		return ce.message + " -> " + ce.err.Error()
+		// return ce.message + " -> " + ce.err.Error()
+		return ce.message
 	} else {
 		return ce.err.Error()
 	}

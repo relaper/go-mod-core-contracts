@@ -14,7 +14,7 @@ import (
 type DeviceService struct {
 	DBTimestamp   `json:",inline"`
 	Id            string   `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"驱动ID"`
-	Name          string   `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
+	Name          string   `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动标识"`
 	Description   string   `json:"description,omitempty"`
 	LastConnected int64    `json:"lastConnected,omitempty"`
 	LastReported  int64    `json:"lastReported,omitempty"`
@@ -27,7 +27,7 @@ type DeviceService struct {
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/UpdateDeviceService
 type UpdateDeviceService struct {
 	Id            *string  `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"驱动ID"`
-	Name          *string  `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
+	Name          *string  `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动标识"`
 	Description   *string  `json:"description"`
 	LastConnected *int64   `json:"lastConnected"`
 	LastReported  *int64   `json:"lastReported"`

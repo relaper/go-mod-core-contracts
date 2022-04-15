@@ -16,7 +16,7 @@ type Transmission struct {
 	Id               string               `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"ID"`
 	Channel          Address              `json:"channel" validate:"required" validate_name:"通道"`
 	NotificationId   string               `json:"notificationId" validate:"required" validate_name:"通知ID"`
-	SubscriptionName string               `json:"subscriptionName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
+	SubscriptionName string               `json:"subscriptionName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅标识"`
 	Records          []TransmissionRecord `json:"records,omitempty"`
 	ResendCount      int                  `json:"resendCount,omitempty"`
 	Status           string               `json:"status" validate:"required,oneof='ACKNOWLEDGED' 'FAILED' 'SENT' 'ESCALATED' 'RESENDING'" validate_name:"状态"`

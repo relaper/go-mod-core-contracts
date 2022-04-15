@@ -14,7 +14,7 @@ import (
 type Subscription struct {
 	DBTimestamp    `json:",inline"`
 	Id             string    `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"订阅ID"`
-	Name           string    `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
+	Name           string    `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅标识"`
 	Channels       []Address `json:"channels" validate:"required,gt=0,dive" validate_name:"通道列表"`
 	Receiver       string    `json:"receiver" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接收者"`
 	Categories     []string  `json:"categories,omitempty" validate:"required_without=Labels,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`
@@ -29,7 +29,7 @@ type Subscription struct {
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-notifications/2.1.0#/UpdateSubscription
 type UpdateSubscription struct {
 	Id             *string   `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"订阅ID"`
-	Name           *string   `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅名称"`
+	Name           *string   `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅标识"`
 	Channels       []Address `json:"channels" validate:"omitempty,gt=0,dive" validate_name:"通道列表"`
 	Receiver       *string   `json:"receiver" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接受者"`
 	Categories     []string  `json:"categories" validate:"omitempty,dive,gt=0,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`

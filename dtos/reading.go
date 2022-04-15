@@ -22,9 +22,9 @@ import (
 type BaseReading struct {
 	Id            string `json:"id,omitempty"`
 	Origin        int64  `json:"origin" validate:"required" validate_name:"原始时间"`
-	DeviceName    string `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
-	ResourceName  string `json:"resourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"属性名称"`
-	ProfileName   string `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
+	DeviceName    string `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备标识"`
+	ResourceName  string `json:"resourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"属性标识"`
+	ProfileName   string `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型标识"`
 	ValueType     string `json:"valueType" validate:"required,edgex-dto-value-type" validate_name:"数据类型"`
 	BinaryReading `json:",inline" validate:"-"`
 	SimpleReading `json:",inline" validate:"-"`

@@ -14,7 +14,7 @@ import (
 type Device struct {
 	DBTimestamp    `json:",inline"`
 	Id             string                        `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"设备ID"`
-	Name           string                        `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
+	Name           string                        `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备标识"`
 	Description    string                        `json:"description,omitempty"`
 	AdminState     string                        `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 	OperatingState string                        `json:"operatingState" validate:"oneof='UP' 'DOWN' 'UNKNOWN'" validate_name:"操作状态"`
@@ -32,7 +32,7 @@ type Device struct {
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/UpdateDevice
 type UpdateDevice struct {
 	Id             *string                       `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"设备ID"`
-	Name           *string                       `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备名称"`
+	Name           *string                       `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备标识"`
 	Description    *string                       `json:"description" validate:"omitempty" validate_name:"设备描述"`
 	AdminState     *string                       `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 	OperatingState *string                       `json:"operatingState" validate:"omitempty,oneof='UP' 'DOWN' 'UNKNOWN'" validate_name:"操作状态"`

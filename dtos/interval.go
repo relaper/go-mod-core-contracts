@@ -14,7 +14,7 @@ import (
 type Interval struct {
 	DBTimestamp `json:",inline"`
 	Id          string `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"间隔ID"`
-	Name        string `json:"name" validate:"edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"间隔名称"`
+	Name        string `json:"name" validate:"edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"间隔标识"`
 	Start       string `json:"start,omitempty" validate:"omitempty,edgex-dto-interval-datetime" validate_name:"开始时间"`
 	End         string `json:"end,omitempty" validate:"omitempty,edgex-dto-interval-datetime" validate_name:"结束时间"`
 	Interval    string `json:"interval" validate:"required,edgex-dto-duration" validate_name:"间隔"`
@@ -29,7 +29,7 @@ func NewInterval(name, interval string) Interval {
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/support-scheduler/2.1.0#/UpdateInterval
 type UpdateInterval struct {
 	Id       *string `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"间隔ID"`
-	Name     *string `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"间隔名称"`
+	Name     *string `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"间隔标识"`
 	Start    *string `json:"start" validate:"omitempty,edgex-dto-interval-datetime" validate_name:"开始时间"`
 	End      *string `json:"end" validate:"omitempty,edgex-dto-interval-datetime" validate_name:"结束时间"`
 	Interval *string `json:"interval" validate:"omitempty,edgex-dto-duration" validate_name:"间隔"`

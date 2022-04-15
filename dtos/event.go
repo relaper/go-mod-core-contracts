@@ -22,9 +22,9 @@ import (
 type Event struct {
 	common.Versionable `json:",inline"`
 	Id                 string                 `json:"id" validate:"required,uuid" validate_name:"事件ID"`
-	DeviceName         string                 `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"事件名称"`
-	ProfileName        string                 `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
-	SourceName         string                 `json:"sourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"属性/命令"`
+	DeviceName         string                 `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"事件"`
+	ProfileName        string                 `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
+	SourceName         string                 `json:"sourceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"变量"`
 	Origin             int64                  `json:"origin" validate:"required" validate_name:""`
 	Readings           []BaseReading          `json:"readings" validate:"gt=0,dive,required" validate_name:""`
 	Tags               map[string]interface{} `json:"tags,omitempty" xml:"-"` // Have to ignore since map not supported for XML

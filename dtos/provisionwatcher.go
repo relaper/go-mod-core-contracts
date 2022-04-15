@@ -14,12 +14,12 @@ import (
 type ProvisionWatcher struct {
 	DBTimestamp         `json:",inline"`
 	Id                  string              `json:"id,omitempty" validate:"omitempty,uuid" validate_name:"ID"`
-	Name                string              `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"名称"`
+	Name                string              `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标识"`
 	Labels              []string            `json:"labels,omitempty"`
 	Identifiers         map[string]string   `json:"identifiers" validate:"gt=0,dive,keys,required,endkeys,required" validate_name:""`
 	BlockingIdentifiers map[string][]string `json:"blockingIdentifiers,omitempty"`
-	ProfileName         string              `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
-	ServiceName         string              `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
+	ProfileName         string              `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
+	ServiceName         string              `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动"`
 	AdminState          string              `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 	AutoEvents          []AutoEvent         `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件列表"`
 }
@@ -28,12 +28,12 @@ type ProvisionWatcher struct {
 // https://app.swaggerhub.com/apis-docs/EdgeXFoundry1/core-metadata/2.1.0#/UpdateProvisionWatcher
 type UpdateProvisionWatcher struct {
 	Id                  *string             `json:"id" validate:"required_without=Name,edgex-dto-uuid" validate_name:"ID"`
-	Name                *string             `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"名称"`
+	Name                *string             `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标识"`
 	Labels              []string            `json:"labels"`
 	Identifiers         map[string]string   `json:"identifiers" validate:"omitempty,gt=0,dive,keys,required,endkeys,required" validate_name:""`
 	BlockingIdentifiers map[string][]string `json:"blockingIdentifiers"`
-	ProfileName         *string             `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型名称"`
-	ServiceName         *string             `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动名称"`
+	ProfileName         *string             `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
+	ServiceName         *string             `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动"`
 	AdminState          *string             `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
 	AutoEvents          []AutoEvent         `json:"autoEvents" validate:"dive" validate_name:"事件列表"`
 }
