@@ -53,7 +53,7 @@ func init() {
 
 // Validate function will use the validator package to validate the struct annotation
 func Validate(a interface{}) error {
-	aTyp := reflect.TypeOf(a)
+	aVal := reflect.ValueOf(a)
 	err := val.Struct(a)
 
 	// translate all error at once
@@ -61,7 +61,7 @@ func Validate(a interface{}) error {
 		errs := err.(validator.ValidationErrors)
 		var errMsg []string
 		for _, e := range errs {
-			errMsg = append(errMsg, getErrorMessage(aTyp, e))
+			errMsg = append(errMsg, getErrorMessage(aVal, e))
 		}
 		return errors.NewCommonEdgeX(errors.KindContractInvalid, strings.Join(errMsg, "; "), nil)
 	}
@@ -69,9 +69,29 @@ func Validate(a interface{}) error {
 }
 
 // Internal: generate representative validation error messages
-func getErrorMessage(aTyp reflect.Type, e validator.FieldError) string {
+func getErrorMessage(aVal reflect.Value, e validator.FieldError) string {
+	ns := e.StructNamespace()
+	f := strings.Index(ns, ".")
+	l := strings.LastIndex(ns, ".")
+
 	fieldName := e.StructNamespace()
-	if field, ok := aTyp.FieldByName(e.Field()); ok {
+	var field *reflect.StructField
+	if f == l {
+		if sd, ok := aVal.Type().FieldByName(e.StructField()); ok {
+			field = &sd
+		}
+	} else {
+		parentNs := ns[f+1 : l]
+
+		if parent, _, _, ok := getStructFieldOKInternal(aVal, parentNs); ok {
+			if parent.Kind() == reflect.Struct {
+				if sd, ok := parent.Type().FieldByName(e.StructField()); ok {
+					field = &sd
+				}
+			}
+		}
+	}
+	if field != nil {
 		if validateName := field.Tag.Get("validate_name"); validateName != "" {
 			fieldName = validateName
 		}
@@ -83,27 +103,27 @@ func getErrorMessage(aTyp reflect.Type, e validator.FieldError) string {
 	var msg string
 	switch tag {
 	case "uuid":
-		msg = fmt.Sprintf("%s 须为 UUID", fieldName)
+		msg = fmt.Sprintf("%s须为UUID", fieldName)
 	case "required":
-		msg = fmt.Sprintf("%s 为必填项", fieldName)
+		msg = fmt.Sprintf("%s为必填项", fieldName)
 	case "required_without":
-		msg = fmt.Sprintf("%s 为必填项（当 %s 为空时）", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s为必填项（当%s为空时）", fieldName, fieldValue)
 	case "len":
-		msg = fmt.Sprintf("%s 长度不为 %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s长度不为%s", fieldName, fieldValue)
 	case "oneof":
-		msg = fmt.Sprintf("%s 需为 %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s需为%s", fieldName, fieldValue)
 	case "gt":
-		msg = fmt.Sprintf("%s 需大于 %s", fieldName, fieldValue)
+		msg = fmt.Sprintf("%s需大于%s", fieldName, fieldValue)
 	case dtoDurationTag:
-		msg = fmt.Sprintf("%s 不是合法时间间隔格式（ISO 8601 Durations：100ms, 24h）", fieldName)
+		msg = fmt.Sprintf("%s不是合法时间间隔格式（ISO 8601 Durations：100ms, 24h）", fieldName)
 	case dtoUuidTag:
-		msg = fmt.Sprintf("%s 须为UUID", fieldName)
+		msg = fmt.Sprintf("%s须为UUID", fieldName)
 	case dtoNoneEmptyStringTag:
-		msg = fmt.Sprintf("%s 不能为空", fieldName)
+		msg = fmt.Sprintf("%s不能为空", fieldName)
 	case dtoRFC3986UnreservedCharTag:
-		msg = fmt.Sprintf("%s 需由字母、数字、_、-或~组成", fieldName)
+		msg = fmt.Sprintf("%s需由字母、数字、_、-或~组成", fieldName)
 	default:
-		msg = fmt.Sprintf("%s 参数验证失败：%s", fieldName, tag)
+		msg = fmt.Sprintf("%s参数验证失败：%s", fieldName, tag)
 	}
 	return msg
 }
