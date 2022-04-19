@@ -21,7 +21,7 @@ type ProvisionWatcher struct {
 	ProfileName         string              `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
 	ServiceName         string              `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动"`
 	AdminState          string              `json:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
-	AutoEvents          []AutoEvent         `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件列表"`
+	AutoEvents          []AutoEvent         `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件个数"`
 }
 
 // UpdateProvisionWatcher and its properties are defined in the APIv2 specification:
@@ -35,7 +35,7 @@ type UpdateProvisionWatcher struct {
 	ProfileName         *string             `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
 	ServiceName         *string             `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"驱动"`
 	AdminState          *string             `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'" validate_name:"管理状态"`
-	AutoEvents          []AutoEvent         `json:"autoEvents" validate:"dive" validate_name:"事件列表"`
+	AutoEvents          []AutoEvent         `json:"autoEvents" validate:"dive" validate_name:"事件个数"`
 }
 
 // ToProvisionWatcherModel transforms the ProvisionWatcher DTO to the ProvisionWatcher model

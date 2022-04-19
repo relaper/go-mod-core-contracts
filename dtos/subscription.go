@@ -17,8 +17,8 @@ type Subscription struct {
 	Name           string    `json:"name" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅标识"`
 	Channels       []Address `json:"channels" validate:"required,gt=0,dive" validate_name:"通道列表"`
 	Receiver       string    `json:"receiver" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接收者"`
-	Categories     []string  `json:"categories,omitempty" validate:"required_without=Labels,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`
-	Labels         []string  `json:"labels,omitempty" validate:"required_without=Categories,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签列表"`
+	Categories     []string  `json:"categories,omitempty" validate:"required_without=Labels,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别"`
+	Labels         []string  `json:"labels,omitempty" validate:"required_without=Categories,omitempty,gt=0,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签"`
 	Description    string    `json:"description,omitempty"`
 	ResendLimit    int       `json:"resendLimit,omitempty"`
 	ResendInterval string    `json:"resendInterval,omitempty" validate:"omitempty,edgex-dto-duration" validate_name:"重发间隔"`
@@ -32,8 +32,8 @@ type UpdateSubscription struct {
 	Name           *string   `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"订阅标识"`
 	Channels       []Address `json:"channels" validate:"omitempty,gt=0,dive" validate_name:"通道列表"`
 	Receiver       *string   `json:"receiver" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"接受者"`
-	Categories     []string  `json:"categories" validate:"omitempty,dive,gt=0,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别列表"`
-	Labels         []string  `json:"labels" validate:"omitempty,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签列表"`
+	Categories     []string  `json:"categories" validate:"omitempty,dive,gt=0,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"类别"`
+	Labels         []string  `json:"labels" validate:"omitempty,dive,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"标签"`
 	Description    *string   `json:"description"`
 	ResendLimit    *int      `json:"resendLimit"`
 	ResendInterval *string   `json:"resendInterval" validate:"omitempty,edgex-dto-duration" validate_name:"重发间隔"`

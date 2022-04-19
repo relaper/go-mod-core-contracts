@@ -25,8 +25,8 @@ type DeviceProfile struct {
 	Model           string           `json:"model" yaml:"model"`
 	Labels          []string         `json:"labels" yaml:"labels,flow"`
 	DeviceService   string           `json:"deviceService" yaml:"deviceService"` // 这里不进行验证了，否则无法兼容
-	DeviceResources []DeviceResource `json:"deviceResources" yaml:"deviceResources" validate:"required,gt=0,dive" validate_name:"属性列表"`
-	DeviceCommands  []DeviceCommand  `json:"deviceCommands" yaml:"deviceCommands" validate:"dive" validate_name:"命令列表"`
+	DeviceResources []DeviceResource `json:"deviceResources" yaml:"deviceResources" validate:"required,gt=0,dive" validate_name:"属性个数"`
+	DeviceCommands  []DeviceCommand  `json:"deviceCommands" yaml:"deviceCommands" validate:"dive" validate_name:"命令个数"`
 }
 
 // Validate satisfies the Validator interface

@@ -24,8 +24,8 @@ type Device struct {
 	Location       interface{}                   `json:"location,omitempty"`
 	ServiceName    string                        `json:"serviceName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联驱动"`
 	ProfileName    string                        `json:"profileName" validate:"required,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联模型"`
-	AutoEvents     []AutoEvent                   `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件列表"`
-	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"required,gt=0" validate_name:"协议配置"`
+	AutoEvents     []AutoEvent                   `json:"autoEvents,omitempty" validate:"dive" validate_name:"事件个数"`
+	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"required,gt=0" validate_name:"协议配置个数"`
 }
 
 // UpdateDevice and its properties are defined in the APIv2 specification:
@@ -42,8 +42,8 @@ type UpdateDevice struct {
 	ProfileName    *string                       `json:"profileName" validate:"omitempty,edgex-dto-none-empty-string,edgex-dto-rfc3986-unreserved-chars" validate_name:"关联模型"`
 	Labels         []string                      `json:"labels"`
 	Location       interface{}                   `json:"location"`
-	AutoEvents     []AutoEvent                   `json:"autoEvents" validate:"dive" validate_name:"事件列表"`
-	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"omitempty,gt=0" validate_name:"协议配置"`
+	AutoEvents     []AutoEvent                   `json:"autoEvents" validate:"dive" validate_name:"事件个数"`
+	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"omitempty,gt=0" validate_name:"协议配置个数"`
 	Notify         *bool                         `json:"notify"`
 }
 

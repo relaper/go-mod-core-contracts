@@ -10,7 +10,7 @@ package dtos
 type DeviceCoreCommand struct {
 	DeviceName   string        `json:"deviceName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"设备"`
 	ProfileName  string        `json:"profileName" validate:"required,edgex-dto-rfc3986-unreserved-chars" validate_name:"模型"`
-	CoreCommands []CoreCommand `json:"coreCommands,omitempty" validate:"dive" validate_name:"命令列表"`
+	CoreCommands []CoreCommand `json:"coreCommands,omitempty" validate:"dive" validate_name:"命令个数"`
 }
 
 // CoreCommand and its properties are defined in the APIv2 specification:
